@@ -15,5 +15,6 @@ resource "aws_route_table_association" "main" {
     count = 2
     subnet_id = "${element(aws_subnet.vpc1-subnet.*.id, count.index)}"
     route_table_id = "${aws_route_table.main.id}"
+    depends_on = ["aws_subnet.vpc1-subnet"]
 }
 
