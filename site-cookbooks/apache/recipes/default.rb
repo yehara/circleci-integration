@@ -13,6 +13,9 @@
   end
 end
 
+remote_directory "/var/www/html" do
+end
+
 service "httpd" do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
