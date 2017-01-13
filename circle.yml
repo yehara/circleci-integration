@@ -2,6 +2,37 @@ general:
   branches:
     only:
       - master
+
+machine:
+  environment:
+    S3_BUCKET: yehara-tfstate
+    AWS_DEFAULT_REGION: ap-northeast-1
+    TERRAFORM_VER: 0.8.4
+    PATH: $PATH:$HOME/.local/bin:$HOME/bin
+
+dependencies:
+  override:
+    - |
+      if [[ ! -f ~/.local/bin/terraform ]]; then
+        mkdir -p ~/.local/bin
+        cd ~/.local/bin
+        wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VER}/terraform_${TERRAFORM_VER}_linux_amd64.zip"
+        unzip *.zip
+        rm *.zip
+      fi
+  cache_directories:
+    - ~/.local/bin
+
 test:
   override:
-    - exit 1
+    - |
+      if [[ "$CIRCLE_BRANCH" =~ (release/)?staging/? ]]; then
+        make remote-enable ENV=dev
+        make terraform ENV=dev ARGS="get -update"
+        make terraform ENV=dev ARGS=plan
+      elif [[ "$CIRCLE_BRANCH" =~ (release/)?production/?|master ]]; then
+        make remote-enable ENV=prd
+        make terraform ENV=prd ARGS="get -update"
+        make terraform ENV=prd ARGS=plan
+      fi
+
