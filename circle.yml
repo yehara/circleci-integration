@@ -34,6 +34,7 @@ test:
         make remote-enable ENV=prd
         make terraform ENV=prd ARGS="get -update"
         make terraform ENV=prd ARGS=plan
+        bundle exec knife solo
       fi
 
 deployment:
