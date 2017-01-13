@@ -6,4 +6,6 @@ variable "instance_types" {
 variable "azs" {
   type = "list"
 }
+variable "amazon_linux_ami" {}
+
 

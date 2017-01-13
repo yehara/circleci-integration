@@ -9,5 +9,7 @@ module "prd" {
   vpc_cidr            = "${var.vpc_cidr}"
   instance_types      = "${var.instance_types}"
   azs                 = ["ap-northeast-1b", "ap-northeast-1c"]
+  amazon_linux_ami    = "${var.amazon_linux_ami}"
+
 }
 

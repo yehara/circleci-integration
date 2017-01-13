@@ -17,6 +17,9 @@ variable "instance_types" {
   }
 }
 
-data "aws_availability_zones" "az" {}
+variable "amazon_linux_ami" {
+  default = "ami-9f0c67f8"
+}
+
 
 

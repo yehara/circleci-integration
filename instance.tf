@@ -1,6 +1,6 @@
 resource "aws_instance" "web1" {
 
-    ami                         = "ami-9f0c67f8"
+    ami                         = "${var.amazon_linux_ami}"
     availability_zone           = "ap-northeast-1b"
     ebs_optimized               = false
     instance_type               = "t2.micro"
