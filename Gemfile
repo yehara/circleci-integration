@@ -6,6 +6,5 @@ gem "chef-dk"
 gem "knife-solo"
 gem "berkshelf"
 gem "unf"
-gem "io-console"
 gem "rake"
 
