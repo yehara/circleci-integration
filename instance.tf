@@ -27,7 +27,7 @@ resource "aws_instance" "web2" {
     ami                         = "${var.amazon_linux_ami}"
     availability_zone           = "${var.azs[1]}"
     ebs_optimized               = false
-    instance_type               = "t2.micro"
+    instance_type               = "t2.nano"
     monitoring                  = false
     key_name                    = "mijs-key"
     subnet_id                   = "${aws_subnet.vpc1-subnet.1.id}"
