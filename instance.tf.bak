@@ -1,0 +1,24 @@
+resource "aws_instance" "monitor2" {
+    ami                         = "ami-5f035c6f"
+    availability_zone           = "us-west-2a"
+    ebs_optimized               = false
+    instance_type               = "t2.micro"
+    monitoring                  = false
+    key_name                    = "saas-common"
+    subnet_id                   = "${aws_subnet.saas-oregon-production-a-public.id}"
+    vpc_security_group_ids      = ["${aws_security_group.vpc-default.id}"]
+    private_ip                  = "10.20.10.2"
+    source_dest_check           = true
+
+    root_block_device {
+        volume_type           = "gp2"
+        volume_size           = 8
+        iops                  = 100
+        delete_on_termination = true
+    }
+
+    tags {
+        "Name" = "monitor2.or.s.questetra.net"
+    }
+}
+
