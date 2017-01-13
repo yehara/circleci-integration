@@ -18,7 +18,7 @@ resource "aws_instance" "web1" {
     }
 
     tags {
-        "Name" = "web1"
+        "Name" = "web1-${var.name}"
     }
 }
 
@@ -42,7 +42,7 @@ resource "aws_instance" "web2" {
     }
 
     tags {
-        "Name" = "web2"
+        "Name" = "web2-${var.name}"
     }
 }
 

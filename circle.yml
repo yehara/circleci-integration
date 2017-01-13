@@ -2,6 +2,7 @@ general:
   branches:
     only:
       - master
+      - release
 
 machine:
   environment:
@@ -28,11 +29,11 @@ dependencies:
 test:
   override:
     - |
-      if [[ "$CIRCLE_BRANCH" =~ (release/)?staging/? ]]; then
-        make remote-enable ENV=dev
-        make terraform ENV=dev ARGS="get -update"
-        make terraform ENV=dev ARGS=plan
-      elif [[ "$CIRCLE_BRANCH" =~ (release/)?production/?|master ]]; then
+      if [[ "$CIRCLE_BRANCH" =~ master ]]; then
+        make remote-enable ENV=stg
+        make terraform ENV=stg ARGS="get -update"
+        make terraform ENV=stg ARGS=plan
+      elif [[ "$CIRCLE_BRANCH" =~ release ]]; then
         make remote-enable ENV=prd
         make terraform ENV=prd ARGS="get -update"
         make terraform ENV=prd ARGS=plan
@@ -40,14 +41,23 @@ test:
 
 deployment:
   production:
-    branch: master
+    branch: release
     commands:
       - make terraform ENV=prd ARGS="get -update"
       - make terraform ENV=prd ARGS=apply
       - make terraform ENV=prd ARGS="remote push"
-      - make terraform ENV="prd" ARGS="output --module=prd web1-address"
       - bundle exec knife solo prepare ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` 
       - bundle exec knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` nodes/web1.json
       - bundle exec knife solo prepare ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web2-address"` 
       - bundle exec knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web2-address"` nodes/web2.json
+  staging:
+    branch: master
+    commands:
+      - make terraform ENV=stg ARGS="get -update"
+      - make terraform ENV=stg ARGS=apply
+      - make terraform ENV=stg ARGS="remote push"
+      - bundle exec knife solo prepare ec2-user@`make terraform ENV="stg" ARGS="output --module=prd web1-address"` 
+      - bundle exec knife solo cook ec2-user@`make terraform ENV="stg" ARGS="output --module=prd web1-address"` nodes/web1.json
+      - bundle exec knife solo prepare ec2-user@`make terraform ENV="stg" ARGS="output --module=prd web2-address"` 
+      - bundle exec knife solo cook ec2-user@`make terraform ENV="stg" ARGS="output --module=prd web2-address"` nodes/web2.json
 
