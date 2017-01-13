@@ -1,5 +1,5 @@
 resource "aws_elb" "web-elb" {
-  name = "web-elb"
+  name = "web-elb-${var.name}"
   subnets = [
     "${aws_subnet.vpc1-subnet.0.id}",
     "${aws_subnet.vpc1-subnet.1.id}",
@@ -25,7 +25,7 @@ resource "aws_elb" "web-elb" {
   connection_draining = true
   connection_draining_timeout = 400
   tags {
-    Name = "web-elb"
+    Name = "web-elb-${var.name}"
   }
 }
 
