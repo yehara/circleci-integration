@@ -46,4 +46,5 @@ deployment:
       - make terraform ENV=prd ARGS="get -update"
       - make terraform ENV=prd ARGS=apply
       - make terraform ENV=prd ARGS="remote push"
+      - knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` node/web1.json
 
