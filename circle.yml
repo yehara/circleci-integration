@@ -20,8 +20,10 @@ dependencies:
         unzip *.zip
         rm *.zip
       fi
+      bundle -j4 --path=vendor/bundle
   cache_directories:
     - ~/.local/bin
+    - "vendor/bundle"
 
 test:
   override:
