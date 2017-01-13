@@ -48,4 +48,6 @@ deployment:
       - make terraform ENV="prd" ARGS="output --module=prd web1-address"
       - bundle exec knife solo prepare ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` 
       - bundle exec knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` nodes/web1.json
+      - bundle exec knife solo prepare ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web2-address"` 
+      - bundle exec knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web2-address"` nodes/web2.json
 
