@@ -40,7 +40,7 @@ deployment:
   production:
     branch: master
     commands:
-      - make terraform ENV=production ARGS="get -update"
-      - make terraform ENV=production ARGS=apply
-      - make terraform ENV=production ARGS="remote push"
+      - make terraform ENV=prd ARGS="get -update"
+      - make terraform ENV=prd ARGS=apply
+      - make terraform ENV=prd ARGS="remote push"
 
