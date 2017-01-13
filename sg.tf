@@ -1,5 +1,5 @@
 resource "aws_security_group" "vpc-default" {
-    name        = "default"
+    name        = "default-sg"
     description = "default VPC security group"
     vpc_id      = "${aws_vpc.vpc1.id}"
 }
