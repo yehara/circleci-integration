@@ -1,7 +1,8 @@
-resource "aws_subnet" "vpc1-subnet1" {
-    vpc_id                  = "${aws_vpc.saas-oregon-production.id}"
-    cidr_block              = "10.20.0.0/16"
-    availability_zone       = "us-west-2a"
+resource "aws_subnet" "vpc1-subnet" {
+    count                   = 2
+    vpc_id                  = "${aws_vpc.vpc1.id}"
+    cidr_block              = "${cidrsubnet(var.vpc_cidr, 8, count.index+1)}"
+    availability_zone       = "${var.azs[count.index]}"
     map_public_ip_on_launch = true
 
     tags {

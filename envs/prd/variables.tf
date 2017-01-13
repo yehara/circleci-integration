@@ -7,7 +7,7 @@ variable "region" {
 }
 
 variable "vpc_cidr" {
-  default = "172.16.0.0/16"
+  default = "10.1.0.0/16"
 }
 
 variable "instance_types" {
@@ -16,4 +16,7 @@ variable "instance_types" {
     "app"     = "t2.nano"
   }
 }
+
+data "aws_availability_zones" "az" {}
+
 

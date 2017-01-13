@@ -18,7 +18,8 @@ resource "aws_route_table" "main" {
 }
  
 resource "aws_route_table_association" "main" {
-    subnet_id = "${aws_subnet.saas-oregon-production-a-public.id}"
+    count = 2
+    subnet_id = "${element(aws_subnet.vpc1-subnet.*.id, count.index)}"
     route_table_id = "${aws_route_table.main.id}"
 }
 
