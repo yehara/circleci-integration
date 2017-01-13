@@ -10,6 +10,6 @@ module "prd" {
   instance_types      = "${var.instance_types}"
   azs                 = ["ap-northeast-1b", "ap-northeast-1c"]
   amazon_linux_ami    = "${var.amazon_linux_ami}"
-
+  keypair_name = "key-${var.name}"
 }
 

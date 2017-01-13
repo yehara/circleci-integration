@@ -5,7 +5,7 @@ resource "aws_instance" "web1" {
     ebs_optimized               = false
     instance_type               = "t2.micro"
     monitoring                  = false
-    key_name                    = "mijs-key"
+    key_name                    = "${aws_key_pair.mijs-key.key_name}"
     subnet_id                   = "${aws_subnet.vpc1-subnet.0.id}"
     vpc_security_group_ids      = ["${aws_security_group.vpc-default.id}"]
     source_dest_check           = true
@@ -29,7 +29,7 @@ resource "aws_instance" "web2" {
     ebs_optimized               = false
     instance_type               = "t2.nano"
     monitoring                  = false
-    key_name                    = "mijs-key"
+    key_name                    = "${aws_key_pair.mijs-key.key_name}"
     subnet_id                   = "${aws_subnet.vpc1-subnet.1.id}"
     vpc_security_group_ids      = ["${aws_security_group.vpc-default.id}"]
     source_dest_check           = true
