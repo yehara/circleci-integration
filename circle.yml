@@ -36,7 +36,6 @@ test:
         make remote-enable ENV=prd
         make terraform ENV=prd ARGS="get -update"
         make terraform ENV=prd ARGS=plan
-        bundle exec knife solo
       fi
 
 deployment:
@@ -46,5 +45,8 @@ deployment:
       - make terraform ENV=prd ARGS="get -update"
       - make terraform ENV=prd ARGS=apply
       - make terraform ENV=prd ARGS="remote push"
-      - knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` node/web1.json
+      - export WEB1=`make terraform ENV="prd" ARGS="output --module=prd web1-address"`
+      - echo $WEB1
+      - bundle exec knife solo prepare ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` 
+      - bnndle exec knife solo cook ec2-user@`make terraform ENV="prd" ARGS="output --module=prd web1-address"` node/web1.json
 
